@@ -91,3 +91,60 @@ function App() {
               </div>
             </motion.div>
           )}
+
+              {/* Parsing State */}
+          {isParsing && (
+            <motion.div
+              key="parsing"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="parsing-state"
+            >
+              <div className="brain-animation">
+                <Brain size={56} className="pulse-brain" />
+                <div className="brain-ring"></div>
+                <div className="brain-ring brain-ring-2"></div>
+              </div>
+              <h3 className="parsing-title">Analyzing Your Resume</h3>
+              <p className="parsing-desc">Extracting skills, scoring impact, and generating insights...</p>
+              <div className="parsing-progress">
+                <div className="parsing-progress-bar"></div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Result State */}
+          {result && !isParsing && (
+            <motion.div
+              key="result"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="success-banner" id="success-banner">
+                <CheckCircle2 size={18} />
+                <span>Resume analyzed successfully!</span>
+              </div>
+
+              <Dashboard data={result} />
+
+              <button
+                className="reset-btn"
+                onClick={() => { setResult(null); setError(null); }}
+                id="reset-btn"
+              >
+                <RefreshCw size={18} />
+                Analyze Another Resume
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
